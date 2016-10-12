@@ -10,53 +10,57 @@ describe 'yarn', :type => :class do
 
       context 'with default params' do
 
-        it { should contain_class('stdlib') }
+        it { is_expected.to contain_class('stdlib') }
 
-        it { should contain_class('yarn::params') }
+        it { is_expected.to contain_class('yarn::params') }
 
         case facts[:osfamily]
         when 'Debian'
-          it { should contain_class('yarn::repo')
+          it { is_expected.to contain_class('yarn::repo')
                   .with_manage_repo(true)
           }
         when 'RedHat'
-          it { should contain_class('yarn::repo')
+          it { is_expected.to contain_class('yarn::repo')
                   .with_manage_repo(true)
           }
         else
-          it { should contain_class('yarn::repo')
+          it { is_expected.to contain_class('yarn::repo')
                   .with_manage_repo(false)
           }
         end
 
         case facts[:osfamily]
         when 'Windows'
-          it { should contain_class('yarn::install')
+          it { is_expected.to contain_class('yarn::install')
                   .with_package_ensure('present')
                   .with_package_name('yarn')
                   .with_install_from_source(false)
                   .with_source_install_dir('/opt')
+                  .with_symbolic_link('/usr/local/bin/yarn')
           }
         when 'Debian'
-          it { should contain_class('yarn::install')
+          it { is_expected.to contain_class('yarn::install')
                   .with_package_ensure('present')
                   .with_package_name('yarn')
                   .with_install_from_source(false)
                   .with_source_install_dir('/opt')
+                  .with_symbolic_link('/usr/local/bin/yarn')
           }
         when 'RedHat'
-          it { should contain_class('yarn::install')
+          it { is_expected.to contain_class('yarn::install')
                   .with_package_ensure('present')
                   .with_package_name('yarn')
                   .with_install_from_source(false)
                   .with_source_install_dir('/opt')
+                  .with_symbolic_link('/usr/local/bin/yarn')
           }
         else
-          it { should contain_class('yarn::install')
+          it { is_expected.to contain_class('yarn::install')
                   .with_package_ensure('present')
                   .with_package_name('yarn')
                   .with_install_from_source(true)
                   .with_source_install_dir('/opt')
+                  .with_symbolic_link('/usr/local/bin/yarn')
           }
         end
 
@@ -68,29 +72,30 @@ describe 'yarn', :type => :class do
         }
         end
 
-        it { should contain_class('yarn::repo')
+        it { is_expected.to contain_class('yarn::repo')
                 .with_manage_repo(true)
         }
       end
 
       context 'with manage_repo => false' do
         let :params do {
-          :manage_repo => true,
+          :manage_repo => false,
         }
         end
 
-        it { should contain_class('yarn::repo')
-                .with_manage_repo(true)
+        it { is_expected.to contain_class('yarn::repo')
+                .with_manage_repo(false)
         }
       end
 
       context 'with install_from_source => true' do
         let :params do {
           :install_from_source => true,
+          :manage_repo => false,
         }
         end
 
-        it { should contain_class('yarn::install')
+        it { is_expected.to contain_class('yarn::install')
                 .with_install_from_source(true)
         }
       end
@@ -101,7 +106,7 @@ describe 'yarn', :type => :class do
         }
         end
 
-        it { should contain_class('yarn::install')
+        it { is_expected.to contain_class('yarn::install')
                 .with_install_from_source(false)
         }
       end
@@ -112,7 +117,7 @@ describe 'yarn', :type => :class do
         }
         end
 
-        it { should contain_class('yarn::install')
+        it { is_expected.to contain_class('yarn::install')
                 .with_package_ensure('dummy')
         }
       end
@@ -123,7 +128,7 @@ describe 'yarn', :type => :class do
         }
         end
 
-        it { should contain_class('yarn::install')
+        it { is_expected.to contain_class('yarn::install')
                 .with_package_name('dummy')
         }
       end
@@ -134,8 +139,19 @@ describe 'yarn', :type => :class do
         }
         end
 
-        it { should contain_class('yarn::install')
+        it { is_expected.to contain_class('yarn::install')
                 .with_source_install_dir('dummy')
+        }
+      end
+
+      context 'with symbolic_link => dummy' do
+        let :params do {
+          :symbolic_link => 'dummy',
+        }
+        end
+
+        it { is_expected.to contain_class('yarn::install')
+                .with_symbolic_link('dummy')
         }
       end
     end

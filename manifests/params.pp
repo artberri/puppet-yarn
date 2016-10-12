@@ -3,12 +3,12 @@ class yarn::params {
   $package_ensure      = present
   $package_name        = 'yarn'
   $source_install_dir  = '/opt'
+  $symbolic_link       = '/usr/local/bin/yarn'
 
   # set OS specific values
   case $::osfamily {
     'Windows': {
-      $manage_repo         = false
-      $install_from_source = false
+      fail("${::module_name} can not manage repo on ${::osfamily}/${::operatingsystem}.")
     }
 
     'Debian': {

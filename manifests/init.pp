@@ -5,6 +5,7 @@ class yarn (
   $manage_repo         = $yarn::params::manage_repo,
   $install_from_source = $yarn::params::install_from_source,
   $source_install_dir  = $yarn::params::source_install_dir,
+  $symbolic_link       = $yarn::params::symbolic_link,
 ) inherits yarn::params {
 
   include stdlib
@@ -18,7 +19,8 @@ class yarn (
   anchor { 'yarn::begin': } ->
 
   class { 'yarn::repo':
-    manage_repo => $manage_repo,
+    manage_repo  => $manage_repo,
+    package_name => $package_name,
   } ~>
 
   class { 'yarn::install':
@@ -26,6 +28,7 @@ class yarn (
     package_name        => $package_name,
     install_from_source => $install_from_source,
     source_install_dir  => $source_install_dir,
+    symbolic_link       => $symbolic_link,
   } ->
 
   anchor { 'yarn::end': }
