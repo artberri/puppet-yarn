@@ -15,7 +15,16 @@ describe 'removing yarn' do
           require        => Class['nodejs'],
           package_ensure => 'absent',
         }
-      } else {
+      }
+      elsif $::osfamily == 'Debian' and $::operatingsystemrelease == '7.8' {
+        class { 'yarn':
+          manage_repo    => false,
+          install_method => 'source',
+          require        => Package['nodejs'],
+          package_ensure => 'absent',
+        }
+      }
+      else {
         class { 'yarn':
           package_ensure => 'absent',
         }

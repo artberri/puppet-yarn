@@ -2,13 +2,13 @@
   "name": "artberri-yarn",
   "version": "1.0.0",
   "author": "artberri",
-  "summary": "Puppet Module to install Node.js with Node Version Manager (NVM)",
-  "description": "A puppet module to install (multiple versions of) Node.js with NVM (Node Version Manager).",
+  "summary": "Puppet Module to install Yarn Package Manager",
+  "description": "A puppet module to install Yarn a dependency manager for npm and bower.",
   "license": "Apache-2.0",
   "source": "https://github.com/artberri/puppet-yarn",
   "project_page": "https://github.com/artberri/puppet-yarn",
   "issues_url": "https://github.com/artberri/puppet-yarn/issues",
-  "tags": ["yarn", "nodejs", "node.js", "node"],
+  "tags": ["yarn", "nodejs", "node.js", "node", "npm", "bower"],
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",

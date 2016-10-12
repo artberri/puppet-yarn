@@ -25,6 +25,7 @@ class yarn::install (
 
         file { $install_dir:
           ensure => 'absent',
+          force  => true,
         }
       }
       else {

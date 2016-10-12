@@ -54,6 +54,7 @@ describe 'yarn', :type => :class do
 
         it { is_expected.to contain_file('/opt/yarn')
                   .with_ensure('absent')
+                  .with_force(true)
         }
 
         it { is_expected.to contain_file('/usr/local/bin/yarn')

@@ -14,7 +14,15 @@ describe 'installing yarn' do
           install_method => 'npm',
           require        => Class['nodejs'],
         }
-      } else {
+      }
+      elsif $::osfamily == 'Debian' and $::operatingsystemrelease == '7.8' {
+        class { 'yarn':
+          manage_repo    => false,
+          install_method => 'source',
+          require        => Package['nodejs'],
+        }
+      }
+      else {
         class { 'yarn': }
 
         Package['nodejs'] -> Package['yarn']
