@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'installing yarn' do
+describe 'removing yarn' do
 
   describe 'running puppet code' do
     pp = <<-EOS
@@ -13,11 +13,12 @@ describe 'installing yarn' do
           manage_repo    => false,
           install_method => 'npm',
           require        => Class['nodejs'],
+          package_ensure => 'absent',
         }
       } else {
-        class { 'yarn': }
-
-        Package['nodejs'] -> Package['yarn']
+        class { 'yarn':
+          package_ensure => 'absent',
+        }
 
         if $::osfamily == 'RedHat' and $::operatingsystemrelease =~ /^5\.(\d+)/ {
           class { 'epel': }
@@ -36,8 +37,7 @@ describe 'installing yarn' do
     end
 
     describe command('yarn -h') do
-      its(:exit_status) { should eq 0 }
-      its(:stdout) { should match /yarn/ }
+      its(:exit_status) { should eq 127 }
     end
 
   end

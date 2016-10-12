@@ -30,8 +30,6 @@ describe 'yarn', :type => :class do
         end
 
         case facts[:osfamily]
-        when 'Windows'
-          it { is_expected.not_to contain_class('yarn::install') }
         when 'Debian'
           it { is_expected.to contain_class('yarn::install')
                   .with_package_ensure('present')
@@ -39,6 +37,8 @@ describe 'yarn', :type => :class do
                   .with_install_method('package')
                   .with_source_install_dir('/opt')
                   .with_symbolic_link('/usr/local/bin/yarn')
+                  .with_user('root')
+                  .with_source_url('https://yarnpkg.com/latest.tar.gz')
           }
         when 'RedHat'
           it { is_expected.to contain_class('yarn::install')
@@ -47,6 +47,8 @@ describe 'yarn', :type => :class do
                   .with_install_method('package')
                   .with_source_install_dir('/opt')
                   .with_symbolic_link('/usr/local/bin/yarn')
+                  .with_user('root')
+                  .with_source_url('https://yarnpkg.com/latest.tar.gz')
           }
         else
           it { is_expected.to contain_class('yarn::install')
@@ -55,6 +57,8 @@ describe 'yarn', :type => :class do
                   .with_install_method('source')
                   .with_source_install_dir('/opt')
                   .with_symbolic_link('/usr/local/bin/yarn')
+                  .with_user('root')
+                  .with_source_url('https://yarnpkg.com/latest.tar.gz')
           }
         end
 
@@ -66,9 +70,19 @@ describe 'yarn', :type => :class do
         }
         end
 
-        it { is_expected.to contain_class('yarn::repo')
-                .with_manage_repo(true)
-        }
+        case facts[:osfamily]
+        when 'Debian'
+          it { is_expected.to contain_class('yarn::repo')
+                  .with_manage_repo(true)
+          }
+        when 'RedHat'
+          it { is_expected.to contain_class('yarn::repo')
+                  .with_manage_repo(true)
+          }
+        else
+          it { is_expected.to raise_error(Puppet::Error, /can not manage repo on/) }
+        end
+
       end
 
       context 'with manage_repo => false' do
@@ -135,6 +149,28 @@ describe 'yarn', :type => :class do
 
         it { is_expected.to contain_class('yarn::install')
                 .with_symbolic_link('dummy')
+        }
+      end
+
+      context 'with user => dummy' do
+        let :params do {
+          :user => 'dummy',
+        }
+        end
+
+        it { is_expected.to contain_class('yarn::install')
+                .with_user('dummy')
+        }
+      end
+
+      context 'with source_url => dummy' do
+        let :params do {
+          :source_url => 'dummy',
+        }
+        end
+
+        it { is_expected.to contain_class('yarn::install')
+                .with_source_url('dummy')
         }
       end
     end

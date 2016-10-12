@@ -22,7 +22,7 @@ describe 'yarn', :type => :class do
                   .with_release('stable')
                   .with_repos('main')
                   .with_key({
-                    'id'     => 'D101F7899D41F3C3',
+                    'id'     => '72ECF46A56B4AD39C907BBB71646B01B86E50310',
                     'server' => 'pgp.mit.edu',
                   })
           }
@@ -37,8 +37,7 @@ describe 'yarn', :type => :class do
                   .with_enabled(1)
           }
         else
-          it { is_expected.not_to contain_apt__source('yarn') }
-          it { is_expected.not_to contain_yumrepo('yarn') }
+          it { is_expected.to raise_error(Puppet::Error, /can not manage repo on/) }
         end
 
       end

@@ -44,6 +44,26 @@ describe 'yarn', :type => :class do
         it { is_expected.not_to contain_exec('npm install -g yarn') }
       end
 
+      context 'with install_method => source & package_ensure => absent' do
+        let :params do {
+          :install_method => 'source',
+          :manage_repo => false,
+          :package_ensure => 'absent',
+        }
+        end
+
+        it { is_expected.to contain_file('/opt/yarn')
+                  .with_ensure('absent')
+        }
+
+        it { is_expected.to contain_file('/usr/local/bin/yarn')
+                  .with_ensure('absent')
+        }
+
+        it { is_expected.not_to contain_package('yarn') }
+        it { is_expected.not_to contain_exec('npm install -g yarn') }
+      end
+
       context 'with install_method => package' do
         let :params do {
           :install_method => 'package',
@@ -52,6 +72,21 @@ describe 'yarn', :type => :class do
 
         it { is_expected.to contain_package('yarn')
                 .with_ensure('present')
+        }
+
+        it { is_expected.not_to contain_exec('wget https://yarnpkg.com/latest.tar.gz') }
+        it { is_expected.not_to contain_exec('npm install -g yarn') }
+      end
+
+      context 'with install_method => package & package_ensure => absent' do
+        let :params do {
+          :install_method => 'package',
+          :package_ensure => 'absent',
+        }
+        end
+
+        it { is_expected.to contain_package('yarn')
+                .with_ensure('absent')
         }
 
         it { is_expected.not_to contain_exec('wget https://yarnpkg.com/latest.tar.gz') }
@@ -70,6 +105,25 @@ describe 'yarn', :type => :class do
                 .with_provider('shell')
                 .with_user('root')
                 .with_unless('npm list -depth 0 -g yarn')
+        }
+
+        it { is_expected.not_to contain_exec('wget https://yarnpkg.com/latest.tar.gz') }
+        it { is_expected.not_to contain_package('yarn') }
+      end
+
+      context 'with install_method => npm & package_ensure => absent' do
+        let :params do {
+          :install_method => 'npm',
+          :manage_repo    => false,
+          :package_ensure => 'absent',
+        }
+        end
+
+        it { is_expected.to contain_exec('npm uninstall -g yarn')
+                .with_command('npm uninstall -g yarn')
+                .with_provider('shell')
+                .with_user('root')
+                .with_onlyif('npm list -depth 0 -g yarn')
         }
 
         it { is_expected.not_to contain_exec('wget https://yarnpkg.com/latest.tar.gz') }

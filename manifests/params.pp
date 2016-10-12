@@ -4,6 +4,8 @@ class yarn::params {
   $package_name        = 'yarn'
   $source_install_dir  = '/opt'
   $symbolic_link       = '/usr/local/bin/yarn'
+  $user                = 'root'
+  $source_url          = 'https://yarnpkg.com/latest.tar.gz'
 
   # set OS specific values
   case $::osfamily {
