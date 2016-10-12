@@ -75,7 +75,7 @@ for any other module.
 
 ```puppet
 class { 'nodejs':
-  repo\_url\_suffix => '6.x',
+  repo_url_suffix => '6.x',
 }
 
 class { 'yarn': }
@@ -96,7 +96,7 @@ for any other module.
 
 ```puppet
 class { 'nodejs':
-  repo\_url\_suffix => '6.x',
+  repo_url_suffix => '6.x',
 }
 
 class { 'yarn': }
@@ -112,7 +112,7 @@ for any other module.
 
 ```puppet
 class { 'nodejs':
-  repo\_url\_suffix => '6.x',
+  repo_url_suffix => '6.x',
 }
 
 class { 'yarn':
@@ -130,7 +130,7 @@ for any other module.
 
 ```puppet
 class { 'nodejs':
-  repo\_url\_suffix => '6.x',
+  repo_url_suffix => '6.x',
 }
 
 class { 'yarn':
