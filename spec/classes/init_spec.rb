@@ -31,18 +31,12 @@ describe 'yarn', :type => :class do
 
         case facts[:osfamily]
         when 'Windows'
-          it { is_expected.to contain_class('yarn::install')
-                  .with_package_ensure('present')
-                  .with_package_name('yarn')
-                  .with_install_from_source(false)
-                  .with_source_install_dir('/opt')
-                  .with_symbolic_link('/usr/local/bin/yarn')
-          }
+          it { is_expected.not_to contain_class('yarn::install') }
         when 'Debian'
           it { is_expected.to contain_class('yarn::install')
                   .with_package_ensure('present')
                   .with_package_name('yarn')
-                  .with_install_from_source(false)
+                  .with_install_method('package')
                   .with_source_install_dir('/opt')
                   .with_symbolic_link('/usr/local/bin/yarn')
           }
@@ -50,7 +44,7 @@ describe 'yarn', :type => :class do
           it { is_expected.to contain_class('yarn::install')
                   .with_package_ensure('present')
                   .with_package_name('yarn')
-                  .with_install_from_source(false)
+                  .with_install_method('package')
                   .with_source_install_dir('/opt')
                   .with_symbolic_link('/usr/local/bin/yarn')
           }
@@ -58,7 +52,7 @@ describe 'yarn', :type => :class do
           it { is_expected.to contain_class('yarn::install')
                   .with_package_ensure('present')
                   .with_package_name('yarn')
-                  .with_install_from_source(true)
+                  .with_install_method('source')
                   .with_source_install_dir('/opt')
                   .with_symbolic_link('/usr/local/bin/yarn')
           }
@@ -88,26 +82,15 @@ describe 'yarn', :type => :class do
         }
       end
 
-      context 'with install_from_source => true' do
+      context 'with install_method => npm' do
         let :params do {
-          :install_from_source => true,
+          :install_method => 'npm',
           :manage_repo => false,
         }
         end
 
         it { is_expected.to contain_class('yarn::install')
-                .with_install_from_source(true)
-        }
-      end
-
-      context 'with install_from_source => false' do
-        let :params do {
-          :install_from_source => false,
-        }
-        end
-
-        it { is_expected.to contain_class('yarn::install')
-                .with_install_from_source(false)
+                .with_install_method('npm')
         }
       end
 

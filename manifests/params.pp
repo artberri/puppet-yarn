@@ -12,18 +12,18 @@ class yarn::params {
     }
 
     'Debian': {
-      $manage_repo         = true
-      $install_from_source = false
+      $manage_repo    = true
+      $install_method = 'package'
     }
 
     'RedHat': {
-      $manage_repo         = true
-      $install_from_source = false
+      $manage_repo    = true
+      $install_method = 'package'
     }
 
     default: {
-      $manage_repo         = false
-      $install_from_source = true
+      $manage_repo    = false
+      $install_method = 'source'
     }
   }
 }

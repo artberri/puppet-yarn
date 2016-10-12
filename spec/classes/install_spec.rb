@@ -8,9 +8,9 @@ describe 'yarn', :type => :class do
         facts
       end
 
-      context 'with install_from_source => true' do
+      context 'with install_method => source' do
         let :params do {
-          :install_from_source => true,
+          :install_method => 'source',
           :manage_repo => false,
         }
         end
@@ -41,19 +41,39 @@ describe 'yarn', :type => :class do
         }
 
         it { is_expected.not_to contain_package('yarn') }
+        it { is_expected.not_to contain_exec('npm install -g yarn') }
       end
 
-      context 'with install_from_source => false' do
+      context 'with install_method => package' do
         let :params do {
-          :install_from_source => false,
+          :install_method => 'package',
         }
         end
-
-        it { is_expected.not_to contain_exec('wget https://yarnpkg.com/latest.tar.gz') }
 
         it { is_expected.to contain_package('yarn')
                 .with_ensure('present')
         }
+
+        it { is_expected.not_to contain_exec('wget https://yarnpkg.com/latest.tar.gz') }
+        it { is_expected.not_to contain_exec('npm install -g yarn') }
+      end
+
+      context 'with install_method => npm' do
+        let :params do {
+          :install_method => 'npm',
+          :manage_repo    => false,
+        }
+        end
+
+        it { is_expected.to contain_exec('npm install -g yarn')
+                .with_command('npm install -g yarn')
+                .with_provider('shell')
+                .with_user('root')
+                .with_unless('npm list -depth 0 -g yarn')
+        }
+
+        it { is_expected.not_to contain_exec('wget https://yarnpkg.com/latest.tar.gz') }
+        it { is_expected.not_to contain_package('yarn') }
       end
 
     end
