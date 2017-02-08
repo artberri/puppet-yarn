@@ -23,7 +23,7 @@ describe 'yarn', :type => :class do
                   .with_repos('main')
                   .with_key({
                     'id'     => '72ECF46A56B4AD39C907BBB71646B01B86E50310',
-                    'server' => 'pgp.mit.edu',
+                    'source' => 'https://dl.yarnpkg.com/debian/pubkey.gpg',
                   })
           }
           it { is_expected.not_to contain_yumrepo('yarn') }
