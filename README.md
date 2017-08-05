@@ -143,7 +143,7 @@ class { 'yarn':
 
 ### Remove Yarn
 
-```
+```puppet
 class { 'yarn':
   package_ensure => false,
 }
