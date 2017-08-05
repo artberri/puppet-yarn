@@ -21,14 +21,14 @@ class yarn (
   validate_bool($manage_repo)
   validate_re($install_method, [ '^npm$', '^source$', '^package$' ],  'The $install_method only accepts npm, source or package as values')
 
-  anchor { 'yarn::begin': } ->
+  anchor { 'yarn::begin': }
 
-  class { 'yarn::repo':
+  -> class { 'yarn::repo':
     manage_repo  => $manage_repo,
     package_name => $package_name,
-  } ~>
+  }
 
-  class { 'yarn::install':
+  ~> class { 'yarn::install':
     package_ensure     => $package_ensure,
     package_name       => $package_name,
     install_method     => $install_method,
@@ -36,8 +36,8 @@ class yarn (
     symbolic_link      => $symbolic_link,
     user               => $user,
     source_url         => $source_url,
-  } ->
+  }
 
-  anchor { 'yarn::end': }
+  -> anchor { 'yarn::end': }
 
 }

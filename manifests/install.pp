@@ -21,9 +21,9 @@ class yarn::install (
       if ($package_ensure == 'absent') {
         file { $symbolic_link:
           ensure => 'absent',
-        } ->
+        }
 
-        file { $install_dir:
+        -> file { $install_dir:
           ensure => 'absent',
           force  => true,
         }
@@ -34,25 +34,25 @@ class yarn::install (
         file { $install_dir:
           ensure => 'directory',
           owner  => $user,
-        } ->
+        }
 
-        exec { "wget ${source_url}":
+        -> exec { "wget ${source_url}":
           command => "wget ${source_url} -O yarn.tar.gz",
           cwd     => $install_dir,
           user    => $user,
           creates => "${install_dir}/yarn.tar.gz",
           require => Package['wget'],
-        } ->
+        }
 
-        exec { 'tar zvxf yarn.tar.gz':
+        -> exec { 'tar zvxf yarn.tar.gz':
           command => 'tar zvxf yarn.tar.gz',
           cwd     => $install_dir,
           user    => $user,
           creates => "${install_dir}/dist",
           require => Package['gzip', 'tar'],
-        } ->
+        }
 
-        file { $symbolic_link:
+        -> file { $symbolic_link:
           ensure => 'link',
           owner  => $user,
           target => '/opt/yarn/dist/bin/yarn',
