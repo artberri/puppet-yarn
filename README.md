@@ -19,6 +19,7 @@ A puppet module to install [Yarn](https://yarnpkg.com) Package Manager.
     * [Remove Yarn](#remove-yarn)
 4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
     * [Class: yarn](#class-yarn)
+    * [Defined type: yarn::install](#defined-type-yarninstall)
 5. [Limitations - OS compatibility, etc.](#limitations)
 6. [Development - Guide for contributing to the module](#development)
 
@@ -220,6 +221,22 @@ Default: `root`.
 Url to download Yarn when `source` installation method is used.
 
 Default: `https://yarnpkg.com/latest.tar.gz`.
+
+### Defined type: `yarn::install`
+
+Install a project's dependencies.
+
+```puppet
+yarn::install { '/path/to/application':
+  production => true,
+}
+```
+
+#### `production`
+
+Install in production mode.
+
+Default: `true`.
 
 ## Limitations
 
