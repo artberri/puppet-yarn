@@ -1,5 +1,5 @@
 # See README.md for usage information
-class yarn::install (
+class yarn::install_yarn (
   $package_ensure,
   $package_name,
   $install_method,

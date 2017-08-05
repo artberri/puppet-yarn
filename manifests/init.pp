@@ -28,7 +28,7 @@ class yarn (
     package_name => $package_name,
   }
 
-  ~> class { 'yarn::install':
+  ~> class { 'yarn::install_yarn':
     package_ensure     => $package_ensure,
     package_name       => $package_name,
     install_method     => $install_method,

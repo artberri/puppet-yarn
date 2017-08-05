@@ -31,7 +31,7 @@ describe 'yarn', :type => :class do
 
         case facts[:osfamily]
         when 'Debian'
-          it { is_expected.to contain_class('yarn::install')
+          it { is_expected.to contain_class('yarn::install_yarn')
                   .with_package_ensure('present')
                   .with_package_name('yarn')
                   .with_install_method('package')
@@ -41,7 +41,7 @@ describe 'yarn', :type => :class do
                   .with_source_url('https://yarnpkg.com/latest.tar.gz')
           }
         when 'RedHat'
-          it { is_expected.to contain_class('yarn::install')
+          it { is_expected.to contain_class('yarn::install_yarn')
                   .with_package_ensure('present')
                   .with_package_name('yarn')
                   .with_install_method('package')
@@ -51,7 +51,7 @@ describe 'yarn', :type => :class do
                   .with_source_url('https://yarnpkg.com/latest.tar.gz')
           }
         else
-          it { is_expected.to contain_class('yarn::install')
+          it { is_expected.to contain_class('yarn::install_yarn')
                   .with_package_ensure('present')
                   .with_package_name('yarn')
                   .with_install_method('source')
@@ -103,7 +103,7 @@ describe 'yarn', :type => :class do
         }
         end
 
-        it { is_expected.to contain_class('yarn::install')
+        it { is_expected.to contain_class('yarn::install_yarn')
                 .with_install_method('npm')
         }
       end
@@ -114,7 +114,7 @@ describe 'yarn', :type => :class do
         }
         end
 
-        it { is_expected.to contain_class('yarn::install')
+        it { is_expected.to contain_class('yarn::install_yarn')
                 .with_package_ensure('dummy')
         }
       end
@@ -125,7 +125,7 @@ describe 'yarn', :type => :class do
         }
         end
 
-        it { is_expected.to contain_class('yarn::install')
+        it { is_expected.to contain_class('yarn::install_yarn')
                 .with_package_name('dummy')
         }
       end
@@ -136,7 +136,7 @@ describe 'yarn', :type => :class do
         }
         end
 
-        it { is_expected.to contain_class('yarn::install')
+        it { is_expected.to contain_class('yarn::install_yarn')
                 .with_source_install_dir('dummy')
         }
       end
@@ -147,7 +147,7 @@ describe 'yarn', :type => :class do
         }
         end
 
-        it { is_expected.to contain_class('yarn::install')
+        it { is_expected.to contain_class('yarn::install_yarn')
                 .with_symbolic_link('dummy')
         }
       end
@@ -158,7 +158,7 @@ describe 'yarn', :type => :class do
         }
         end
 
-        it { is_expected.to contain_class('yarn::install')
+        it { is_expected.to contain_class('yarn::install_yarn')
                 .with_user('dummy')
         }
       end
@@ -169,7 +169,7 @@ describe 'yarn', :type => :class do
         }
         end
 
-        it { is_expected.to contain_class('yarn::install')
+        it { is_expected.to contain_class('yarn::install_yarn')
                 .with_source_url('dummy')
         }
       end
