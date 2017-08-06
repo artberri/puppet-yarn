@@ -39,5 +39,4 @@ class yarn (
   }
 
   -> anchor { 'yarn::end': }
-
 }
