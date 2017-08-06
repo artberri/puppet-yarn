@@ -1,7 +1,7 @@
 define yarn::install (
   Boolean $production = true,
   Optional[String] $group = undef,
-  Optional[String] $user = udef,
+  Optional[String] $user = undef,
   Optional[Integer] $timeout = undef,
 ) {
   include yarn
