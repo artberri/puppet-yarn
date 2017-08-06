@@ -4,6 +4,8 @@ define yarn::install (
   Optional[String] $user = udef,
   Optional[Integer] $timeout = undef,
 ) {
+  include yarn
+
   exec { "yarn-install-${title}":
     command => "yarn install --production=${production}",
     path    => '/bin:/sbin:/usr/bin:/usr/sbin',
@@ -13,4 +15,6 @@ define yarn::install (
     group   => $group,
     timeout => $timeout,
   }
+  Anchor['yarn::end']
+  -> Exec["yarn-install-${title}"]
 }
