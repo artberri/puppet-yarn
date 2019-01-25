@@ -11,13 +11,15 @@ A puppet module to install [Yarn](https://yarnpkg.com) Package Manager.
     * [What yarn affects](#what-yarn-affects)
     * [Beginning with yarn](#beginning-with-yarn)
 3. [Usage - Configuration options and additional functionality](#usage)
-    * [Installing an specific version of Node.js](#installing-an-specific-version-of-nodejs)
-    * [Installing multiple versions of Node.js](#installing-multiple-versions-of-nodejs)
-    * [Installing Node.js globally](#installing-nodejs-globally)
-    * [Installing Node.js global npm packages](#installing-nodejs-global-npm-packages)
+    * [Installing Yarn](#installing-yarn)
+    * [Installing Yarn on CentOS with Node.js](#installing-yarn-on-centos-with-nodejs)
+    * [Installing Yarn on Ubuntu with Node.js](#installing-yarn-on-ubuntu-with-nodejs)
+    * [Installing Yarn on other Linux distros with Node.js](#installing-yarn-on-other-linux-distros-with-nodejs)
+    * [Installing Yarn using npm with Node.js](#installing-yarn-using-npm-with-nodejs)
+    * [Remove Yarn](#remove-yarn)
 4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
     * [Class: yarn](#class-yarn)
-    * [Define: yarn::node::install](#define-yarnnodeinstall)
+    * [Defined type: yarn::install](#defined-type-yarninstall)
 5. [Limitations - OS compatibility, etc.](#limitations)
 6. [Development - Guide for contributing to the module](#development)
 
@@ -143,7 +145,7 @@ class { 'yarn':
 
 ### Remove Yarn
 
-```
+```puppet
 class { 'yarn':
   package_ensure => false,
 }
@@ -219,6 +221,22 @@ Default: `root`.
 Url to download Yarn when `source` installation method is used.
 
 Default: `https://yarnpkg.com/latest.tar.gz`.
+
+### Defined type: `yarn::install`
+
+Install a project's dependencies.
+
+```puppet
+yarn::install { '/path/to/application':
+  production => true,
+}
+```
+
+#### `production`
+
+Install in production mode.
+
+Default: `true`.
 
 ## Limitations
 
