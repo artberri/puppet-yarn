@@ -14,7 +14,7 @@ describe 'Yarn::Install' do
 
     it { should compile}
 
-    it { is_expected.to contain_exec('yarn-install-/var/www/app').with(command: 'yarn install --production=false', unless: 'yarn check --production=false', cwd: '/var/www/app') }
+    it { is_expected.to contain_exec('yarn-install-/var/www/app').with(command: 'yarn install --production=false ', unless: 'yarn check --production=false', cwd: '/var/www/app') }
   end
 
   context 'in production mode' do
@@ -22,6 +22,6 @@ describe 'Yarn::Install' do
 
     it { should compile}
 
-    it { is_expected.to contain_exec('yarn-install-/var/www/app').with(command: 'yarn install --production=true', unless: 'yarn check --production=true', cwd: '/var/www/app') }
+    it { is_expected.to contain_exec('yarn-install-/var/www/app').with(command: 'yarn install --production=true --frozen-lockfile', unless: 'yarn check --production=true', cwd: '/var/www/app') }
   end
 end

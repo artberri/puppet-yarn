@@ -8,7 +8,7 @@ class yarn::params {
   $source_url          = 'https://yarnpkg.com/latest.tar.gz'
 
   # set OS specific values
-  case $::osfamily {
+  case $facts['osfamily'] {
     'Windows': {
       fail("${::module_name} can not manage repo on ${::osfamily}/${::operatingsystem}.")
     }
