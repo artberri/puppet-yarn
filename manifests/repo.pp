@@ -11,15 +11,16 @@ class yarn::repo (
       'Debian': {
         include apt
 
+        apt::key {'HEXKEYID':
+          source => 'https://dl.yarnpkg.com/debian/pubkey.gpg',
+          id     => '72ECF46A56B4AD39C907BBB71646B01B86E50310'
+        }
+
         apt::source { 'yarn':
           comment  => 'Yarn source',
           location => 'http://dl.yarnpkg.com/debian/',
           release  => 'stable',
           repos    => 'main',
-          key      => {
-            'id'     => '72ECF46A56B4AD39C907BBB71646B01B86E50310',
-            'server' => 'pgp.mit.edu',
-          },
         }
 
         Apt::Source['yarn'] -> Class['apt::update'] -> Package[$package_name]
