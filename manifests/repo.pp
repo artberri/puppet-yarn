@@ -1,24 +1,27 @@
 # See README.md for usage information
+#
+# @param manage_repo
+# @param package_name
+#
 class yarn::repo (
-  $manage_repo,
-  $package_name,
+  Optional[Boolean] $manage_repo = undef,
+  Optional[String] $package_name = undef,
 ) {
   assert_private()
 
   if $manage_repo {
-
-    case $::osfamily {
+    case $facts['os']['family'] {
       'Debian': {
         include apt
 
         apt::source { 'yarn':
           comment  => 'Yarn source',
-          location => 'http://dl.yarnpkg.com/debian/',
+          location => 'https://dl.yarnpkg.com/debian/',
           release  => 'stable',
           repos    => 'main',
           key      => {
             'id'     => '72ECF46A56B4AD39C907BBB71646B01B86E50310',
-            'server' => 'pgp.mit.edu',
+            'source' => 'https://dl.yarnpkg.com/debian/pubkey.gpg',
           },
         }
 
@@ -38,10 +41,8 @@ class yarn::repo (
       }
 
       default: {
-        fail("${::module_name} can not manage repo on ${::osfamily}/${::operatingsystem}.")
+        fail("${module_name} can not manage repo on ${facts['os']['family']}/${facts['os']['name']}.")
       }
     }
-
   }
-
 }
