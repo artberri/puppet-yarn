@@ -1,25 +1,44 @@
-# Puppet yarn
+# [DEPRECATED] Puppet yarn
 
-[![Build Status](https://travis-ci.org/artberri/puppet-yarn.svg?branch=master)](https://travis-ci.org/artberri/puppet-yarn)
+> 📌 **Deprecation Notice**
+>
+> This repository is deprecated and no more work will be done on this by [Alberto Varela](https://github.com/artberri). The usage of this plugin is discouraged and any future issues will not be fixed by its current author.
+>
+> I've [offered the plugin to the Voxpupuli community](https://groups.io/g/voxpupuli/message/484), but it seems they are not interested in adopting it. If you are interested in maintaining this plugin, don't hesitate to contact me.
+>
+> If you don't want to take over as a maintainer, but you still want to get feature/bugfix X into production open-source is all about forking, so go right ahead.
 
 A puppet module to install [Yarn](https://yarnpkg.com) Package Manager.
 
 #### Table of Contents
 
-1. [Module Description - What the module does and why it is useful](#module-description)
-2. [Setup - The basics of getting started with yarn](#setup)
-    * [What yarn affects](#what-yarn-affects)
-    * [Beginning with yarn](#beginning-with-yarn)
-3. [Usage - Configuration options and additional functionality](#usage)
-    * [Installing an specific version of Node.js](#installing-an-specific-version-of-nodejs)
-    * [Installing multiple versions of Node.js](#installing-multiple-versions-of-nodejs)
-    * [Installing Node.js globally](#installing-nodejs-globally)
-    * [Installing Node.js global npm packages](#installing-nodejs-global-npm-packages)
-4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-    * [Class: yarn](#class-yarn)
-    * [Define: yarn::node::install](#define-yarnnodeinstall)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+- [Puppet yarn](#puppet-yarn) - [Table of Contents](#table-of-contents)
+  - [Module Description](#module-description)
+  - [Setup](#setup)
+    - [What yarn affects](#what-yarn-affects)
+    - [Beginning with yarn](#beginning-with-yarn)
+  - [Usage](#usage)
+    - [Installing Yarn](#installing-yarn)
+    - [Installing Yarn on CentOS with Node.js](#installing-yarn-on-centos-with-nodejs)
+    - [Installing Yarn on Ubuntu with Node.js](#installing-yarn-on-ubuntu-with-nodejs)
+    - [Installing Yarn on other Linux distros with Node.js](#installing-yarn-on-other-linux-distros-with-nodejs)
+    - [Installing Yarn using npm with Node.js](#installing-yarn-using-npm-with-nodejs)
+    - [Remove Yarn](#remove-yarn)
+  - [Reference](#reference)
+    - [Class: `yarn`](#class-yarn)
+      - [`package_ensure`](#package_ensure)
+      - [`package_name`](#package_name)
+      - [`manage_repo`](#manage_repo)
+      - [`install_method`](#install_method)
+      - [`source_install_dir`](#source_install_dir)
+      - [`symbolic_link`](#symbolic_link)
+      - [`user`](#user)
+      - [`source_url`](#source_url)
+  - [Limitations](#limitations)
+  - [Development](#development)
+    - [Contributing](#contributing)
+    - [Running tests](#running-tests)
+      - [Testing quickstart](#testing-quickstart)
 
 ## Module Description
 
@@ -30,8 +49,8 @@ package, npm or source installation.
 
 ### What yarn affects
 
-* It will install Yarn.
-* It will install `wget`, `tar` and `gzip` packages if you choose the source installation method.
+- It will install Yarn.
+- It will install `wget`, `tar` and `gzip` packages if you choose the source installation method.
 
 **Node.js requirement:** Yarn requires Node.js to be installed, but this module will not do it. You need to install Node.js by your own, you can
 use the [puppet-nodejs](https://forge.puppetlabs.com/puppet/nodejs) to do it. Examples are provided with this module.
@@ -163,7 +182,7 @@ When this class is declared with the default options, Puppet:
 
 You can simply declare the default `yarn` class:
 
-``` puppet
+```puppet
 class { 'yarn': }
 ```
 
